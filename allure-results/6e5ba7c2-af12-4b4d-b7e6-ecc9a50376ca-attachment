@@ -1,0 +1,77 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: api\api.spec.js >> JSONPlaceholder API tests >> Create, update, and delete post dynamic flow
+- Location: tests\api\api.spec.js:22:3
+
+# Error details
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 500
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | import userData from './fixtures/user-data.json' assert { type: 'json' };
+  3  | 
+  4  | const apiUrl = process.env.API_URL;
+  5  | 
+  6  | test.describe('JSONPlaceholder API tests', () => {
+  7  |   test('GET /posts returns 200 and valid schema', async ({ request }) => {
+  8  |     const response = await request.get(`${apiUrl}/posts`);
+  9  |     expect(response.status()).toBe(200);
+  10 |     const body = await response.json();
+  11 |     expect(Array.isArray(body)).toBeTruthy();
+  12 |     expect(body[0]).toHaveProperty('userId');
+  13 |     expect(body[0]).toHaveProperty('title');
+  14 |     expect(body[0]).toHaveProperty('body');
+  15 |   });
+  16 | 
+  17 |   test('GET /invalid-endpoint returns 404', async ({ request }) => {
+  18 |     const response = await request.get(`${apiUrl}/invalid-endpoint`);
+  19 |     expect(response.status()).toBe(404);
+  20 |   });
+  21 | 
+  22 |   test('Create, update, and delete post dynamic flow', async ({ request }) => {
+  23 |     const payload = {
+  24 |       ...userData.defaultPost,
+  25 |       title: `QA-${Date.now()}`
+  26 |     };
+  27 | 
+  28 |     const createResponse = await request.post(`${apiUrl}/posts`, { json: payload });
+  29 |     expect(createResponse.status()).toBe(201);
+  30 |     const created = await createResponse.json();
+  31 |     expect(created).toHaveProperty('id');
+  32 |     expect(created.id).toBeGreaterThan(0);
+  33 | 
+  34 |     const updatedPayload = {
+  35 |       ...payload,
+  36 |       body: 'Updated body for QA post'
+  37 |     };
+  38 |     const updateResponse = await request.put(`${apiUrl}/posts/${created.id}`, { json: updatedPayload });
+> 39 |     expect(updateResponse.status()).toBe(200);
+     |                                     ^ Error: expect(received).toBe(expected) // Object.is equality
+  40 |     const updated = await updateResponse.json();
+  41 |     expect(updated).toMatchObject(updatedPayload);
+  42 | 
+  43 |     const deleteResponse = await request.delete(`${apiUrl}/posts/${created.id}`);
+  44 |     expect([200, 204]).toContain(deleteResponse.status());
+  45 |   });
+  46 | 
+  47 |   test('Creating a duplicate post returns 201 or 400', async ({ request }) => {
+  48 |     const response = await request.post(`${apiUrl}/posts`, { json: userData.defaultPost });
+  49 |     expect([201, 400]).toContain(response.status());
+  50 |   });
+  51 | });
+  52 | 
+```

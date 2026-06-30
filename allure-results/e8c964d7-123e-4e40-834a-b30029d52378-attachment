@@ -1,0 +1,86 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: ui\ui.spec.js >> Sauce Demo UI flows >> Invalid login shows error message
+- Location: tests\ui\ui.spec.js:19:3
+
+# Error details
+
+```
+TimeoutError: page.waitForURL: Timeout 20000ms exceeded.
+=========================== logs ===========================
+waiting for navigation to "**/inventory.html" until "load"
+============================================================
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e4]: Swag Labs
+  - generic [ref=e5]:
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - textbox "Username" [ref=e11]: wrong_user
+        - img [ref=e12]
+      - generic [ref=e14]:
+        - textbox "Password" [ref=e15]: wrong_pass
+        - img [ref=e16]
+      - 'heading "Epic sadface: Username and password do not match any user in this service" [level=3] [ref=e19]':
+        - button [ref=e20] [cursor=pointer]:
+          - img [ref=e21]
+        - text: "Epic sadface: Username and password do not match any user in this service"
+      - button "Login" [active] [ref=e23] [cursor=pointer]
+    - generic [ref=e25]:
+      - generic [ref=e26]:
+        - heading "Accepted usernames are:" [level=4] [ref=e27]
+        - text: standard_user
+        - text: locked_out_user
+        - text: problem_user
+        - text: performance_glitch_user
+        - text: error_user
+        - text: visual_user
+      - generic [ref=e28]:
+        - heading "Password for all users:" [level=4] [ref=e29]
+        - text: secret_sauce
+```
+
+# Test source
+
+```ts
+  1  | import { expect } from '@playwright/test';
+  2  | 
+  3  | export class LoginPage {
+  4  |   constructor(page) {
+  5  |     this.page = page;
+  6  |     this.userName = page.locator('#user-name');
+  7  |     this.password = page.locator('#password');
+  8  |     this.loginButton = page.locator('#login-button');
+  9  |     this.errorMessage = page.locator('[data-test="error"]');
+  10 |   }
+  11 | 
+  12 |   async goto() {
+  13 |     await this.page.goto('/');
+  14 |   }
+  15 | 
+  16 |   async login(username, password) {
+  17 |     await this.userName.fill(username);
+  18 |     await this.password.fill(password);
+  19 |     await Promise.all([
+> 20 |       this.page.waitForURL('**/inventory.html', { timeout: 20000 }),
+     |                 ^ TimeoutError: page.waitForURL: Timeout 20000ms exceeded.
+  21 |       this.loginButton.click()
+  22 |     ]);
+  23 |   }
+  24 | 
+  25 |   async expectError(message) {
+  26 |     await expect(this.errorMessage).toHaveText(message);
+  27 |   }
+  28 | }
+  29 | 
+```

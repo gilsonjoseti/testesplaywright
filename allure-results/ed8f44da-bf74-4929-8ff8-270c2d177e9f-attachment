@@ -1,0 +1,71 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: api\api.spec.js >> ReqRes API tests >> Create, validate, and delete user dynamic flow
+- Location: tests\api\api.spec.js:20:3
+
+# Error details
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 201
+Received: 401
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | 
+  3  | const apiUrl = process.env.API_URL;
+  4  | 
+  5  | test.describe('ReqRes API tests', () => {
+  6  |   test('GET /users?page=2 returns 200 and valid schema', async ({ request }) => {
+  7  |     const response = await request.get(`${apiUrl}/users?page=2`);
+  8  |     expect(response.status()).toBe(200);
+  9  |     const body = await response.json();
+  10 |     expect(body).toHaveProperty('page');
+  11 |     expect(body).toHaveProperty('data');
+  12 |     expect(Array.isArray(body.data)).toBeTruthy();
+  13 |   });
+  14 | 
+  15 |   test('GET /unknown returns 401 or 403 for protected resource', async ({ request }) => {
+  16 |     const response = await request.get(`${apiUrl}/unknown`);
+  17 |     expect([401, 403]).toContain(response.status());
+  18 |   });
+  19 | 
+  20 |   test('Create, validate, and delete user dynamic flow', async ({ request }) => {
+  21 |     const payload = {
+  22 |       name: `QA-${Date.now()}`,
+  23 |       job: 'senior tester'
+  24 |     };
+  25 | 
+  26 |     const createResponse = await request.post(`${apiUrl}/users`, { data: payload });
+> 27 |     expect(createResponse.status()).toBe(201);
+     |                                     ^ Error: expect(received).toBe(expected) // Object.is equality
+  28 |     const created = await createResponse.json();
+  29 |     expect(created).toMatchObject(payload);
+  30 |     expect(created).toHaveProperty('id');
+  31 | 
+  32 |     const deleteResponse = await request.delete(`${apiUrl}/users/${created.id}`);
+  33 |     expect([204, 200]).toContain(deleteResponse.status());
+  34 |   });
+  35 | 
+  36 |   test('Creating a duplicate user returns 409 or 400', async ({ request }) => {
+  37 |     const payload = {
+  38 |       name: 'QA Senior',
+  39 |       job: 'tester',
+  40 |       email: 'eve.holt@reqres.in'
+  41 |     };
+  42 |     const response = await request.post(`${apiUrl}/users`, { data: payload });
+  43 |     expect([400, 409]).toContain(response.status());
+  44 |   });
+  45 | });
+  46 | 
+```
