@@ -45,7 +45,7 @@ Este portfólio demonstra um projeto de automação de testes com foco em QA Sê
    ```bash
    npm test
    ```
-   Este comando executa o Playwright, gera os resultados do Allure e, quando rodado localmente, abre o relatório automaticamente no navegador.
+   Este comando executa o Playwright, os testes BDD e o teste de performance, gera os resultados do Allure e, quando rodado localmente, abre o relatório no navegador.
 3. Rodar somente API
    ```bash
    npm run test:api
@@ -71,6 +71,7 @@ Este portfólio demonstra um projeto de automação de testes com foco em QA Sê
    npm run test:bdd
    ```
    Observação: O BDD usa CommonJS para compatibilidade com o runner Cucumber.
+   Os resultados do BDD são gerados no diretório `allure-results` pelo formatter `allure-cucumberjs/reporter`, permitindo que o relatório Allure agregue cenários BDD.
 8. Rodar teste de performance
    ```bash
    npm run test:perf

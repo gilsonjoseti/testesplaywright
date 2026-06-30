@@ -1,0 +1,13 @@
+{
+  "options": {
+    "vus": 10,
+    "duration": "30s"
+  },
+  "metrics": {
+    "http_req_failed": {
+      "value": 0.01
+    }
+  },
+  "scenario": {},
+  "root_group": {}
+}

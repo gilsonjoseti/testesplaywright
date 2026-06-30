@@ -1,0 +1,53 @@
+{
+  "uid": "k6-performance-51eb09e7-c6c6-4ec8-988f-df03981802c8",
+  "name": "k6 performance test",
+  "fullName": "performance/k6 API load test",
+  "status": "passed",
+  "statusDetails": {},
+  "stage": "finished",
+  "steps": [],
+  "attachments": [
+    {
+      "name": "k6 summary",
+      "source": "k6-performance-51eb09e7-c6c6-4ec8-988f-df03981802c8-summary.json",
+      "type": "application/json"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "vus",
+      "value": "10"
+    },
+    {
+      "name": "duration",
+      "value": "30s"
+    },
+    {
+      "name": "baseUrl",
+      "value": ""
+    }
+  ],
+  "labels": [
+    {
+      "name": "language",
+      "value": "JavaScript"
+    },
+    {
+      "name": "framework",
+      "value": "k6"
+    },
+    {
+      "name": "package",
+      "value": "performance"
+    },
+    {
+      "name": "suite",
+      "value": "k6 performance"
+    }
+  ],
+  "links": [],
+  "start": 1782862165042,
+  "stop": 1782862166042,
+  "description": "Performance results exported from k6 and converted into Allure format.",
+  "testCaseId": "k6-performance-51eb09e7-c6c6-4ec8-988f-df03981802c8"
+}
