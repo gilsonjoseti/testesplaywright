@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [api, ui]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - name: Run Playwright tests
+        run: |
+          if [ "${{ matrix.target }}" = "api" ]; then
+            npm run test:api;
+          else
+            npm run test:ui;
+          fi
+      - name: Run BDD API tests
+        if: matrix.target == 'api'
+        run: |
+          npm run test:bdd
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.target }}
+          path: playwright-report
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-${{ matrix.target }}
+          path: allure-results
+
+  performance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - name: Install k6
+        run: sudo apt-get update && sudo apt-get install -y k6
+      - name: Run k6 performance test
+        run: npm run test:perf
+      - name: Upload k6 report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-report
+          path: ./

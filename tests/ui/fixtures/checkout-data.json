@@ -1,0 +1,18 @@
+[
+  {
+    "username": "standard_user",
+    "password": "secret_sauce",
+    "firstName": "John",
+    "lastName": "Doe",
+    "postalCode": "12345",
+    "productIndexes": [0, 1]
+  },
+  {
+    "username": "performance_glitch_user",
+    "password": "secret_sauce",
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "postalCode": "54321",
+    "productIndexes": [2, 3, 4]
+  }
+]
