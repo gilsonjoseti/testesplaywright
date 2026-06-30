@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
-const BASE_URL = __ENV.API_URL || 'https://reqres.in/api';
+const BASE_URL = __ENV.API_URL || 'https://jsonplaceholder.typicode.com';
 
 export let options = {
   vus: 10,

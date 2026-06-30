@@ -79,6 +79,10 @@ Este portfólio demonstra um projeto de automação de testes com foco em QA Sê
 
 > Relatório Allure gerado com sucesso em `allure-report`.
 
+### Teste de performance
+- O script padrão usa `https://jsonplaceholder.typicode.com`.
+- Se precisar usar outro endpoint, exporte `API_URL` antes de rodar.
+
 > Observação: o k6 deve estar instalado no sistema para executar o script de performance.
 > Instalação local:
 > - macOS/Linux: `brew install k6` ou siga https://k6.io/docs/getting-started/installation/
