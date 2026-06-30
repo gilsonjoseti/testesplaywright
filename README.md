@@ -53,6 +53,9 @@ Este portfólio demonstra um projeto de automação de testes com foco em QA Sê
    ```bash
    npm run test:ui
    ```
+
+   Após a execução, o relatório Allure é gerado automaticamente em `allure-report` e será aberto no navegador local se não estiver em ambiente CI.
+
 5. Rodar o teste de checkout parametrizado
    ```bash
    npx playwright test tests/ui/ui-checkout.spec.js
