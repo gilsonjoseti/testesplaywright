@@ -1,12 +1,12 @@
-import { spawn } from 'node:child_process';
+import { exec } from 'node:child_process';
 
-const command = process.platform === 'win32' ? 'npx.cmd' : 'npx';
-const args = ['allure', 'open', 'allure-report'];
+const command = process.platform === 'win32'
+  ? 'npx.cmd allure open allure-report'
+  : 'npx allure open allure-report';
 
-const child = spawn(command, args, {
-  detached: true,
-  stdio: 'ignore',
-  shell: false
+exec(command, { shell: true }, (error) => {
+  if (error) {
+    console.error('Failed to open Allure report:', error.message);
+    process.exit(1);
+  }
 });
-
-child.unref();
