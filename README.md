@@ -102,6 +102,25 @@ Pipeline GitHub Actions em `.github/workflows/ci.yml` executa:
 - testes de performance
 - upload de relatórios como artefatos
 
+## Execução manual no GitHub Actions
+[![Run manual tests](https://img.shields.io/badge/Run%20Manual%20Tests-GitHub%20Actions-blue?logo=github)](https://github.com/gilsonjoseti/testesplaywright/actions/workflows/manual-test-runner.yml)
+
+O workflow `manual-test-runner.yml` permite disparar testes diretamente pelo GitHub Actions usando `workflow_dispatch`.
+
+Ele aceita as seguintes opções:
+- `all`: executa todos os testes
+- `api`: executa apenas testes de API
+- `ui`: executa apenas testes de UI
+- `bdd`: executa apenas testes BDD
+- `perf`: executa apenas teste de performance
+
+Você também pode escolher o browser para UI:
+- `chromium`
+- `firefox`
+- `webkit`
+
+Os artefatos gerados são enviados como `manual-test-artifacts-<target>`.
+
 ## Decisões técnicas
 - Escolha do Playwright por estabilidade, execução cruzada de browser e suporte a testes UI + API.
 - API pública escolhida: `https://jsonplaceholder.typicode.com`.

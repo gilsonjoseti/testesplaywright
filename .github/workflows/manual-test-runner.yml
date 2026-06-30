@@ -1,0 +1,77 @@
+name: Manual Test Runner
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Select the test suite to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - api
+          - ui
+          - bdd
+          - perf
+      browser:
+        description: 'Playwright browser to install for UI tests'
+        required: false
+        default: 'chromium'
+        type: choice
+        options:
+          - chromium
+          - firefox
+          - webkit
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      APP_URL: https://www.saucedemo.com
+      API_URL: https://jsonplaceholder.typicode.com
+      USERNAME: standard_user
+      PASSWORD: secret_sauce
+      CI: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - name: Install Playwright browser
+        if: ${{ github.event.inputs.target != 'api' && github.event.inputs.target != 'bdd' && github.event.inputs.target != 'perf' }}
+        run: npx playwright install ${{ github.event.inputs.browser }}
+      - name: Run selected tests
+        run: |
+          case "${{ github.event.inputs.target }}" in
+            all)
+              npm test
+              ;;
+            api)
+              npm run test:api
+              ;;
+            ui)
+              npm run test:ui
+              ;;
+            bdd)
+              npm run test:bdd
+              ;;
+            perf)
+              npm run test:perf
+              ;;
+            *)
+              echo "Unknown target: ${{ github.event.inputs.target }}"
+              exit 1
+              ;;
+          esac
+      - name: Upload manifest artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-test-artifacts-${{ github.event.inputs.target }}
+          path: |
+            playwright-report
+            allure-report
+            allure-results
+          if-no-files-found: ignore
