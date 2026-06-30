@@ -45,6 +45,7 @@ Este portfólio demonstra um projeto de automação de testes com foco em QA Sê
    ```bash
    npm test
    ```
+   Este comando executa o Playwright, gera os resultados do Allure e, quando rodado localmente, abre o relatório automaticamente no navegador.
 3. Rodar somente API
    ```bash
    npm run test:api
