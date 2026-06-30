@@ -12,12 +12,19 @@ jobs:
     strategy:
       matrix:
         target: [api, ui]
+    env:
+      APP_URL: https://www.saucedemo.com
+      API_URL: https://jsonplaceholder.typicode.com
+      USERNAME: standard_user
+      PASSWORD: secret_sauce
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
       - run: npm install
+      - name: Install Playwright browser
+        run: npx playwright install chromium
       - name: Run Playwright tests
         run: |
           if [ "${{ matrix.target }}" = "api" ]; then

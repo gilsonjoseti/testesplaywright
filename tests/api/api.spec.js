@@ -46,8 +46,8 @@ test.describe('JSONPlaceholder API tests', () => {
     expect(deleteResponse.status()).toBe(200);
   });
 
-  test('Creating a duplicate post returns 201 or 400', async ({ request }) => {
+  test('Creating a duplicate post returns 201', async ({ request }) => {
     const response = await request.post(`${apiUrl}/posts`, { json: userData.defaultPost });
-    expect([201, 400]).toContain(response.status());
+    expect(response.status()).toBe(201);
   });
 });

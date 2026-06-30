@@ -27,4 +27,4 @@ Feature: API Publica - JSONPlaceholder
   Scenario: Criar post duplicado retorna fluxo adaptado
     Given a post already exists with title "foo"
     When I create a new post with the same title
-    Then the response status code should be 201 or 400
+    Then the response status code should be 201

@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/login.page.js';
 import { InventoryPage } from './pages/inventory.page.js';
 
-const { USERNAME, PASSWORD } = process.env;
+const USERNAME = process.env.USERNAME || 'standard_user';
+const PASSWORD = process.env.PASSWORD || 'secret_sauce';
 
 test.describe('Sauce Demo UI flows', () => {
   test('User can login and add an item to cart', async ({ page }) => {

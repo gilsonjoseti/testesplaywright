@@ -110,7 +110,7 @@ Pipeline GitHub Actions em `.github/workflows/ci.yml` executa:
 - `https://jsonplaceholder.typicode.com` é uma API de teste pública que aceita criação e atualização de recursos, mas não persiste alterações reais.
 - O fluxo dinâmico foi adaptado para usar criação dinâmica e atualização/exclusão de um recurso existente (`/posts/1`), devido à limitação de persistência da API.
 - A API JSONPlaceholder retorna apenas o `id` no corpo da resposta para o PUT em alguns casos, então a validação foi adaptada para confirmar o status e o `id` retornado.
-- Os cenários de erro foram adaptados para o comportamento da API pública, usando `404` para recursos inexistentes e `201`/`400` para duplicação de posts.
+- Os cenários de erro foram adaptados para o comportamento da API pública, usando `404` para recursos inexistentes e `201` para duplicação de posts.
 
 ## Possíveis melhorias
 - Adicionar mais validações de contrato com schemas JSON
