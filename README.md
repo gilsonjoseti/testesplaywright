@@ -143,4 +143,5 @@ Os artefatos gerados são enviados como `manual-test-artifacts-<target>`.
 ## Uso de IA
 - Auxílio na criação da estrutura do projeto, arquivos de configuração e README.
 - Prompts podem ser incluídos aqui para documentação futura.
->>>>>>> e45d9f8 (Initial QA portfolio with Playwright, BDD, performance and Allure reporting)
+
+(Initial QA portfolio with Playwright, BDD, performance and Allure reporting)
