@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import userData from './fixtures/user-data.json' assert { type: 'json' };
 
-const apiUrl = process.env.API_URL;
+const apiUrl = process.env.API_URL || 'https://jsonplaceholder.typicode.com';
 
 test.describe('JSONPlaceholder API tests', () => {
   test('GET /posts returns 200 and valid schema', async ({ request }) => {
