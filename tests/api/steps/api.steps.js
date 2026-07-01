@@ -14,12 +14,12 @@ Given('a public API endpoint', function () {
 });
 
 When('I request GET /posts', async function () {
-  context.response = await fetch(`${context.apiUrl}/posts`);
-  context.body = await context.response.json();
+  this.context.response = await fetch(`${this.context.apiUrl}/posts`);
+  this.context.body = await this.context.response.json();
 });
 
 When('I request GET /invalid-endpoint', async function () {
-  context.response = await fetch(`${context.apiUrl}/invalid-endpoint`);
+  this.context.response = await fetch(`${this.context.apiUrl}/invalid-endpoint`);
 });
 
 When('I create a new post with random dynamic data', async function () {
