@@ -1,0 +1,11 @@
+{
+  "uuid": "b03ebf73-a450-4076-b238-623d440a3ee8",
+  "children": [
+    "k6-performance-510260c1-4d8c-4081-b3b7-a5a04eadec54"
+  ],
+  "befores": [],
+  "afters": [],
+  "name": "k6 performance",
+  "start": 1782948180358,
+  "stop": 1782948181358
+}
